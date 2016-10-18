@@ -96,8 +96,8 @@ for pgen in primenumbers_gen:
 
     # Plot
     i += 1
-    label="%(pgen)s" % locals()
-    ppl.plot(nbs, nbs*avgs, label=label, lw=1, linestyle='--', color=set2[i % 12])
+    #label="%(pgen)s" % locals()
+    #ppl.plot(nbs, nbs*avgs, label=label, lw=1, linestyle='--', color=set2[i % 12])
     label="%(pgen)s avg" % locals()
     ppl.plot(nbs, a * nbs + b, label=label, lw=2, color=set2[i % 12])
 print datetime.datetime.now().strftime(datetimeformat)
