@@ -81,7 +81,7 @@ if __name__=='__main__':
         results[pgen] = {'benchtimes':np.array(benchtimes)}
 
 fig, ax = plt.subplots(1)
-plt.ylabel('Avg time for check one number (in second)')
+plt.ylabel('Computation time (in second)')
 plt.xlabel('Numbers computed')
 i = 0
 for pgen in primenumbers_gen:
