@@ -25,16 +25,6 @@ primenumbers_gen = [
     'rwh_primes2',
 ]
 
-def human_format(num):
-    # http://stackoverflow.com/questions/579310/formatting-long-numbers-as-strings-in-python?answertab=active#tab-top
-    magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000.0
-    # add more suffixes if you need them
-    return '%.2f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
-
-
 if __name__=='__main__':
 
     # Vars
@@ -107,8 +97,7 @@ ppl.legend(ax, loc='upper left', ncol=4)
 # Change x axis label
 ax.get_xaxis().get_major_formatter().set_scientific(False)
 fig.canvas.draw()
-labels = [human_format(int(item.get_text())) for item in ax.get_xticklabels()]
-
+labels = [lib.human_format(int(item.get_text())) for item in ax.get_xticklabels()]
 ax.set_xticklabels(labels)
 ax = plt.gca()
 
