@@ -22,6 +22,23 @@ def rwh_primes(n):
             sieve[i*i::2*i]=[False]*((n-i*i-1)/(2*i)+1)
     return [2] + [i for i in xrange(3,n,2) if sieve[i]]
 
+def search_sequence(arr,seq):
+    #http://stackoverflow.com/questions/36522220/searching-a-sequence-in-a-numpy-array?answertab=active#tab-top
+
+    #  Range of sequence
+    r_seq = np.arange(seq.size)
+
+    # Create 2D array of sliding indices across entire length of input array.
+    # Match up with the input sequence & get the matching starting indices.
+    M = (arr[np.arange(arr.size-seq.size+1)[:,None] + r_seq] == seq).all(1)
+
+    # Get the range of those indices as final output
+    if M.any>0:
+        return np.where(np.convolve(M,np.ones((seq.size),dtype=int))>0)[0]
+    else:
+        return []         # No match found
+
+
 def rwh_primes1(n):
     # http://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
     """ Returns  a list of primes < n """
