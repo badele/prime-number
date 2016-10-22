@@ -57,4 +57,5 @@ if __name__=='__main__':
     ax = plt.gca()
 
     ppl.legend()
+    plt.grid()
     plt.show()

@@ -101,4 +101,5 @@ labels = [lib.human_format(int(item.get_text())) for item in ax.get_xticklabels(
 ax.set_xticklabels(labels)
 ax = plt.gca()
 
+plt.grid()
 plt.show()
