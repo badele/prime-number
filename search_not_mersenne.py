@@ -23,6 +23,7 @@ if __name__=='__main__':
     n = int(sys.argv[1])
 
     # Compute primes
+    print "Check M=2^p-1 is prime"
     primes = lib.primesfrom3to(n)
     for p in primes:
         p = long(p)

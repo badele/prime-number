@@ -24,3 +24,19 @@ First max k-tuples apparition for 1.00K
 523 541 => 18 x 1
 887 907 => 20 x 1
 ```
+
+**search_not_mersenne.py**
+
+```
+Check M=2^p-1 is prime
+M11 is not mersenne prime
+M23 is not mersenne prime
+M29 is not mersenne prime
+M37 is not mersenne prime
+M41 is not mersenne prime
+M43 is not mersenne prime
+M47 is not mersenne prime
+M53 is not mersenne prime
+M59 is not mersenne prime
+M67 is not mersenne prime
+```
