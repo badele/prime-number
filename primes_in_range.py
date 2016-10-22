@@ -20,11 +20,13 @@ def human_format(num):
 
 if __name__=='__main__':
 
-    # Get n in command line
-    if len(sys.argv)>1:
-        n = int(sys.argv[1])
+    # Parse command line options
+    if len(sys.argv)<=1:
+        print "Please set loop numbers"
+        sys.exit()
 
     # Vars
+    n = int(sys.argv[1])
     div = 100
     step = n / div
 

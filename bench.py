@@ -47,10 +47,12 @@ if __name__=='__main__':
     }
 
 
-    # Get n in command line
-    if len(sys.argv)>1:
-        n = int(sys.argv[1])
+    # Parse command line options
+    if len(sys.argv)<=1:
+        print "Please set loop numbers"
+        sys.exit()
 
+    n = int(sys.argv[1])
     step = int(math.ceil(n / float(nbcol)))
     nbs = np.array([i * step for i in range(1, int(nbcol) + 1)])
     set2 = brewer2mpl.get_map('Paired', 'qualitative', 12).mpl_colors
