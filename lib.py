@@ -3,6 +3,7 @@
 
 from math import sqrt, ceil
 import numpy as np
+import random
 
 def human_format(num):
     # http://stackoverflow.com/questions/579310/formatting-long-numbers-as-strings-in-python?answertab=active#tab-top
@@ -12,6 +13,108 @@ def human_format(num):
         num /= 1000.0
     # add more suffixes if you need them
     return '%.2f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
+
+
+def calc_mersenne(n):
+    return 2**n-1
+
+def is_probable_prime(n,k=5):
+    # https://rosettacode.org/wiki/Miller%E2%80%93Rabin_primality_test#Python:_Probably_correct_answers
+    assert n >= 2
+    # special case 2
+    if n == 2:
+        return True
+    # ensure n is odd
+    if n % 2 == 0:
+        return False
+    # write n-1 as 2**s * d
+    # repeatedly try to divide n-1 by 2
+    s = 0
+    d = n - 1
+    while True:
+        quotient, remainder = divmod(d, 2)
+        if remainder == 1:
+            break
+        s += 1
+        d = quotient
+    assert (2 ** s * d == n - 1)
+
+    # test the base a to see whether it is a witness for the compositeness of n
+    def try_composite(a):
+        if pow(a, d, n) == 1:
+            return False
+        for i in range(s):
+            if pow(a, 2 ** i * d, n) == n - 1:
+                return False
+        return True  # n is definitely composite
+
+    for i in range(k):
+        a = random.randrange(2, n)
+        if try_composite(a):
+            return False
+
+    return True  # no base tested showed n as composite
+
+
+
+def lpowmod(a, b, n):
+    # http://python.jpvweb.com/mesrecettespython/doku.php?id=est_premier
+    """Replace python pow function"""
+    r = 1
+    while b > 0:
+        if b & 1 == 0:
+            b = b >> 1
+        else:
+            r = (r * a) % n
+            b = (b - 1) >> 1
+        a = (a * a) % n
+    return r
+
+# http://python.jpvweb.com/mesrecettespython/doku.php?id=est_premier
+
+def _millerRabin(a, n):
+    # http://python.jpvweb.com/mesrecettespython/doku.php?id=est_premier
+    """Not call this function directely, call is_probable_prime(n, k=20)"""
+    # trouver s et d pour transformer n-1 en (2**s)*d
+    d = n - 1
+    s = 0
+    while d % 2 == 0:
+        d >>= 1
+        s += 1
+
+    # calculer l'exponentiation modulaire (a**d)%n
+    apow = lpowmod(a, d, n)  # =(a**d)%n
+
+    # si (a**d) % n ==1 => n est probablement 1er
+    if apow == 1:
+        return True
+
+    for r in xrange(0, s):
+        # si a**(d*(2**r)) % n == (n-1) => n est probablement 1er
+        if lpowmod(a, d, n) == n - 1:
+            return True
+        d *= 2
+
+    return False
+
+
+def is_probable_prime1(n, k=20):
+    # http://python.jpvweb.com/mesrecettespython/doku.php?id=est_premier
+    """Test Miller-Rabin prime probality"""
+
+    # Eliminer le cas des nombres pairs qui ne peuvent pas etre 1ers!
+    if n & 1 == 0:
+        return False
+
+    # recommencer le test k fois: seul les nb ayant reussi k fois seront True
+    for repete in xrange(0, k):
+        # trouver un nombre au hasard entre 1 et n-1 (bornes inclues)
+        a = random.randint(1, n - 1)
+        # si le test echoue une seule fois => n est compose
+        if not _millerRabin(a, n):
+            return False
+    # n a reussi les k tests => il est probablement 1er
+    return True
 
 def rwh_primes(n):
     # http://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n-in-python/3035188#3035188
