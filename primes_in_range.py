@@ -8,16 +8,6 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-def human_format(num):
-    # http://stackoverflow.com/questions/579310/formatting-long-numbers-as-strings-in-python?answertab=active#tab-top
-    magnitude = 0
-    while abs(num) >= 1000:
-        magnitude += 1
-        num /= 1000.0
-    # add more suffixes if you need them
-    return '%.2f%s' % (num, ['', 'K', 'M', 'G', 'T', 'P'][magnitude])
-
-
 if __name__=='__main__':
 
     # Parse command line options
